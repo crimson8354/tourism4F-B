@@ -1,9 +1,9 @@
 package com.example.practice
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.practice.databinding.RestaurantLayoutBinding
@@ -25,6 +25,9 @@ class RestaurantAdapter(private val data: List<Restaurant>): RecyclerView.Adapte
         holder.binding.mainImageView.contentDescription = info.picDesc1
         holder.binding.addressTextView.text = info.address
         Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.mainImageView)
+        holder.binding.mainImageView.setOnClickListener {
+            holder.itemView.findNavController().navigate(R.id.detailFragment)
+        }
     }
 
     override fun getItemCount(): Int {
