@@ -11,14 +11,14 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practice.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private var dialog: AlertDialog? = null
-    @Inject
-    lateinit var viewModelFactory: ViewModelFactory
-    private val viewModel: RestaurantViewModel by viewModels { viewModelFactory }
+    private val viewModel: RestaurantViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,9 +29,7 @@ class MainActivity : AppCompatActivity() {
         layout.orientation = LinearLayoutManager.VERTICAL
         val recyclerView = binding.mainRecyclerView
         recyclerView.layoutManager = layout
-
-        viewModelFactory = ViewModelFactory(RestaurantRepository(ApiManager.client.create(ApiService::class.java)))
-
+        
         dialog = this.let {
             val builder = AlertDialog.Builder(it)
             builder.apply {
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.restaurants.observe(this, Observer {
-            Log.i("test", (Looper.myLooper() == Looper.getMainLooper()).toString())
+            Log.i("test", "${(Looper.myLooper() == Looper.getMainLooper()).toString()} in live data observe")
             binding.mainProgressBar.isVisible = false
             recyclerView.adapter = RestaurantAdapter(it)
         })

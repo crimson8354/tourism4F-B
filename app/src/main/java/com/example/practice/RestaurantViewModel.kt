@@ -1,25 +1,28 @@
 package com.example.practice
 
+import android.os.Looper
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class RestaurantViewModel @Inject constructor(val repository: RestaurantRepository): ViewModel() {
+class RestaurantViewModel @Inject constructor(private val repository: RestaurantRepository): ViewModel() {
     val restaurants = MutableLiveData<List<Restaurant>>()
     val errorMessage = MutableLiveData<String>()
 
     fun getRestaurants() {
-        repository.getRestaurants(object: TaskResult<List<Restaurant>> {
-            override fun onSuccess(data: List<Restaurant>) {
-                restaurants.postValue(data)
+        viewModelScope.launch(Dispatchers.IO) {
+            val restaurants = repository.getRestaurants()
+            if (restaurants != null) {
+                this@RestaurantViewModel.restaurants.postValue(restaurants)
+            } else {
+                errorMessage.postValue("Api is failure")
             }
-
-            override fun onFailure(message: String) {
-                errorMessage.postValue(message)
-            }
-        })
+        }
     }
 }
