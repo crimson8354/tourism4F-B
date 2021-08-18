@@ -1,5 +1,6 @@
 package com.example.practice
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.Navigation
@@ -26,7 +27,10 @@ class RestaurantAdapter(private val data: List<Restaurant>): RecyclerView.Adapte
         holder.binding.addressTextView.text = info.address
         Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.mainImageView)
         holder.binding.mainImageView.setOnClickListener {
-            holder.itemView.findNavController().navigate(R.id.detailFragment)
+            val bundle = Bundle()
+            bundle.putString("address", info.address)
+            bundle.putParcelable("coordinate", Coordinate(info.longitude, info.latitude))
+            it.findNavController().navigate(R.id.action_mainFragment_to_detailFragment, bundle)
         }
     }
 
@@ -34,6 +38,5 @@ class RestaurantAdapter(private val data: List<Restaurant>): RecyclerView.Adapte
         return data.count()
     }
 
-    inner class ViewHolder(val binding: RestaurantLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
-    }
+    inner class ViewHolder(val binding: RestaurantLayoutBinding) : RecyclerView.ViewHolder(binding.root) {}
 }
