@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.navArgs
 import com.example.practice.databinding.FragmentDetailBinding
 import kotlinx.parcelize.Parcelize
 
@@ -23,16 +24,7 @@ private const val ARG_COORDINATE = "coordinate"
 class DetailFragment : Fragment() {
     private var _binding: FragmentDetailBinding? = null
     private val binding get() = _binding!!
-    private var address: String? = null
-    private var coordinate: Coordinate? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            address = it.getString(ARG_ADDRESS)
-            coordinate = it.getParcelable(ARG_COORDINATE)
-        }
-    }
+    private val args: DetailFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,27 +37,16 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.detailTextView.text = address
+        binding.detailTextView.text = args.address
         binding.mapWebView.settings.javaScriptEnabled = true
-        Log.i("test", "${coordinate!!.latitude},${coordinate!!.longitude}")
-        binding.mapWebView.loadUrl("https://www.google.com/maps/@${coordinate!!.latitude},${coordinate!!.longitude},15z")
+        binding.mapWebView.loadUrl("https://www.google.com/maps/@${args.coordinate!!.latitude},${args.coordinate!!.longitude},15z")
+        Log.i("test", "${args.coordinate!!.latitude},${args.coordinate!!.longitude}")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
 
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance(address: String, coordinate: Coordinate) =
-            DetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_ADDRESS, address)
-                    putParcelable(ARG_COORDINATE, coordinate)
-                }
-            }
     }
 }
 

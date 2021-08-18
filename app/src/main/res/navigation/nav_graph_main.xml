@@ -9,7 +9,14 @@
         android:id="@+id/detailFragment"
         android:name="com.example.practice.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="address"
+            app:argType="string" />
+        <argument
+            android:name="coordinate"
+            app:argType="com.example.practice.Coordinate" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.practice.MainFragment"
