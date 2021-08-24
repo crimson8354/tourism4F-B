@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.practice.databinding.FragmentMainBinding
@@ -20,10 +22,10 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
     private var dialog: AlertDialog? = null
     private val viewModel: RestaurantViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    private lateinit var gridLayoutManager: GridLayoutManager
+    private lateinit var linearAdapter: RestaurantAdapter
+    private lateinit var gridAdapter: GridRestaurantAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,13 +38,9 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val layout = LinearLayoutManager(this.context)
-        layout.orientation = LinearLayoutManager.VERTICAL
-        val recyclerView = binding.mainRecyclerView
-        recyclerView.layoutManager = layout
-        var adapter =  RestaurantAdapter(emptyList())
-        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-        recyclerView.adapter = adapter
+        linearLayoutManager = LinearLayoutManager(this.context)
+        linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
+        gridLayoutManager = GridLayoutManager(this.context, 2)
 
         dialog = this.context.let {
             val builder = AlertDialog.Builder(it)
@@ -56,11 +54,28 @@ class MainFragment : Fragment() {
             builder.create()
         }
 
+        binding.mainToolbar.setOnMenuItemClickListener {
+            Toast.makeText(this.context, "did Tap: ${it.itemId.toString()}, ${it.order.toString()}", Toast.LENGTH_SHORT).show()
+            when(it.order) {
+                0 -> {
+                    binding.mainRecyclerView.adapter = linearAdapter
+                    binding.mainRecyclerView.layoutManager = linearLayoutManager
+                }
+                1 -> {
+                    binding.mainRecyclerView.adapter = gridAdapter
+                    binding.mainRecyclerView.layoutManager = gridLayoutManager
+                }
+            }
+            true
+        }
+
         viewModel.restaurants.observe(viewLifecycleOwner, Observer {
             binding.mainProgressBar.isVisible = false
-            recyclerView.adapter = RestaurantAdapter(it)
+            linearAdapter = RestaurantAdapter(it.last().list.first())
+            gridAdapter = GridRestaurantAdapter(it.last().list.first())
+            binding.mainRecyclerView.adapter = linearAdapter
+            binding.mainRecyclerView.layoutManager = linearLayoutManager
         })
-
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer {
             binding.mainProgressBar.isVisible = false
             dialog?.show()
@@ -72,10 +87,5 @@ class MainFragment : Fragment() {
         super.onDestroyView()
 
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = MainFragment()
     }
 }

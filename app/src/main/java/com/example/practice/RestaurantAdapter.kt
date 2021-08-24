@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.practice.databinding.RestaurantLayoutBinding
 
-class RestaurantAdapter(private val data: List<Restaurant>): RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
+class RestaurantAdapter(private val data: RestaurantTown): RecyclerView.Adapter<RestaurantAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var inflater = LayoutInflater.from(parent.context)
@@ -16,7 +16,7 @@ class RestaurantAdapter(private val data: List<Restaurant>): RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val info = data[position]
+        val info = data.list[position]
         holder.binding.nameTextView.text = info.name
         holder.binding.openTimeTextView.text = info.openTime
         holder.binding.telephoneTextView.text = info.telephone
@@ -31,7 +31,7 @@ class RestaurantAdapter(private val data: List<Restaurant>): RecyclerView.Adapte
     }
 
     override fun getItemCount(): Int {
-        return data.count()
+        return data.list.count()
     }
 
     inner class ViewHolder(val binding: RestaurantLayoutBinding) : RecyclerView.ViewHolder(binding.root) {}

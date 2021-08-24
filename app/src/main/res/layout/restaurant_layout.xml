@@ -16,6 +16,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_margin="10dp"
+            android:scaleType="centerCrop"
             app:srcCompat="@color/material_on_primary_disabled"
             tools:srcCompat="@tools:sample/avatars" />
 

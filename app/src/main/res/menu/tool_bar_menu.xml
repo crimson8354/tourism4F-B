@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_menu_city"
+        android:icon="@drawable/ic_baseline_location_city_48"
+        android:title="列表"
+        android:orderInCategory="0"
+        tools:showAsAction="never|withText" />
+    <item
+        android:id="@+id/action_menu_district"
+        android:icon="@drawable/ic_baseline_dashboard_48"
+        android:title="格狀"
+        android:orderInCategory="1"
+        tools:showAsAction="never|withText" />
+</menu>

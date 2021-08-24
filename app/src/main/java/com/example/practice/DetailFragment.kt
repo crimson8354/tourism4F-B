@@ -39,8 +39,8 @@ class DetailFragment : Fragment() {
 
         binding.detailTextView.text = args.address
         binding.mapWebView.settings.javaScriptEnabled = true
-        binding.mapWebView.loadUrl("https://www.google.com/maps/@${args.coordinate!!.latitude},${args.coordinate!!.longitude},15z")
-        Log.i("test", "${args.coordinate!!.latitude},${args.coordinate!!.longitude}")
+        binding.mapWebView.loadUrl("https://www.google.com/maps/@${args.coordinate.latitude},${args.coordinate.longitude},15z")
+        Log.i("test", "${args.coordinate.latitude},${args.coordinate.longitude}")
     }
 
     override fun onDestroyView() {
