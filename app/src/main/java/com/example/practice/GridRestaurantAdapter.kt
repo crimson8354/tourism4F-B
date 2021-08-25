@@ -17,10 +17,10 @@ class GridRestaurantAdapter(private val data: RestaurantTown): RecyclerView.Adap
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val info = data.list[position]
-        Glide.with(holder.binding.root).load(info.picture1).into(holder.binding.gridMainImageView)
+        Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.gridMainImageView)
         holder.binding.gridNameTextView.text = info.name
         holder.binding.root.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(info.address, Coordinate(info.longitude, info.latitude))
+            val action = RootFragmentDirections.actionRootFragmentToDetailFragment(info.address, Coordinate(info.longitude, info.latitude))
             it.findNavController().navigate(action)
         }
     }

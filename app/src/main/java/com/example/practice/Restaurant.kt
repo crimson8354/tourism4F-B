@@ -1,6 +1,8 @@
 package com.example.practice
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 import java.net.URL
 
 data class Welcome (
@@ -30,6 +32,7 @@ data class Infos (
     var info: List<Restaurant> = emptyList()
 )
 
+@Parcelize
 data class Restaurant (
     @SerializedName("Id")
     var id: String = "",
@@ -73,4 +76,4 @@ data class Restaurant (
     var map: String = "",
     @SerializedName("Parkinginfo")
     var parkingInfo: String = ""
-)
+): Parcelable

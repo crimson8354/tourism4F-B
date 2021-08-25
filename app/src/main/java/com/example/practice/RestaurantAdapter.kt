@@ -25,7 +25,7 @@ class RestaurantAdapter(private val data: RestaurantTown): RecyclerView.Adapter<
         holder.binding.addressTextView.text = info.address
         Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.mainImageView)
         holder.binding.mainImageView.setOnClickListener {
-            val action = MainFragmentDirections.actionMainFragmentToDetailFragment(info.address, Coordinate(info.longitude, info.latitude))
+            val action = RootFragmentDirections.actionRootFragmentToDetailFragment(info.address, Coordinate(info.longitude, info.latitude))
             it.findNavController().navigate(action)
         }
     }
