@@ -1,5 +1,6 @@
-package com.example.practice
+package com.example.practice.service
 
+import com.example.practice.model.Welcome
 import retrofit2.Response
 import retrofit2.http.GET
 

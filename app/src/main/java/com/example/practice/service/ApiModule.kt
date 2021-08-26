@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.service
 
 import dagger.Module
 import dagger.Provides

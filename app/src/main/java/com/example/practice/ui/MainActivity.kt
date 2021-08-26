@@ -1,10 +1,10 @@
-package com.example.practice
+package com.example.practice.ui
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import com.example.practice.databinding.ActivityMainBinding
+import com.example.practice.viewmodels.RestaurantViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

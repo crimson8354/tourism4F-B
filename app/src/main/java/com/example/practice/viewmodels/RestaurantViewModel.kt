@@ -1,10 +1,12 @@
-package com.example.practice
+package com.example.practice.viewmodels
 
 import android.os.Parcelable
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.practice.model.Restaurant
+import com.example.practice.repository.RestaurantRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

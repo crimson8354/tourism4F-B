@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.practice.adapter.GridRestaurantAdapter
+import com.example.practice.adapter.RestaurantAdapter
 import com.example.practice.databinding.FragmentMainBinding
+import com.example.practice.model.Restaurant
+import com.example.practice.viewmodels.RestaurantRegion
+import com.example.practice.viewmodels.RestaurantTown
+import com.example.practice.viewmodels.RestaurantViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,19 +28,32 @@ class MainFragment() : Fragment() {
     private lateinit var gridLayoutManager: GridLayoutManager
     private lateinit var linearAdapter: RestaurantAdapter
     private lateinit var gridAdapter: GridRestaurantAdapter
-    private lateinit var region: RestaurantRegion
+    private val data: RestaurantTown = RestaurantTown("All", emptyList())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         arguments?.let {
-            region = it.getParcelable(MainFragment.REGION)!!
+            val region: RestaurantRegion = it.getParcelable(REGION)!!
+            for (town in region.list) {
+                val header = Restaurant(id = "0", town = town.list.first().town)
+                data.list += listOf(header) + town.list
+            }
         }
+
         linearLayoutManager = LinearLayoutManager(this.context)
         linearLayoutManager.orientation = LinearLayoutManager.VERTICAL
         gridLayoutManager = GridLayoutManager(this.context, 2)
-        linearAdapter = RestaurantAdapter(region.list.first()) // TODO - need to display all data
-        gridAdapter = GridRestaurantAdapter(region.list.first()) // TODO - need to display all data
+        gridLayoutManager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return when(data.list[position].id) {
+                    "0" -> 2
+                    else -> 1
+                }
+            }
+        }
+        linearAdapter = RestaurantAdapter(data)
+        gridAdapter = GridRestaurantAdapter(data)
     }
 
     override fun onCreateView(
@@ -74,7 +93,7 @@ class MainFragment() : Fragment() {
     companion object {
         private const val REGION = "restaurant_region"
         fun newInstance(region: RestaurantRegion) = MainFragment().apply {
-            arguments = bundleOf(MainFragment.REGION to region)
+            arguments = bundleOf(REGION to region)
         }
     }
 }

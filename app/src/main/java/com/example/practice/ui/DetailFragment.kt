@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.ui
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -13,8 +13,6 @@ import kotlinx.parcelize.Parcelize
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_ADDRESS = "address"
-private const val ARG_COORDINATE = "coordinate"
 
 /**
  * A simple [Fragment] subclass.

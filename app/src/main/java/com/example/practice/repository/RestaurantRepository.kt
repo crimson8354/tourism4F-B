@@ -1,7 +1,7 @@
-package com.example.practice
+package com.example.practice.repository
 
-import android.os.Looper
-import android.util.Log
+import com.example.practice.model.Restaurant
+import com.example.practice.service.ApiService
 import javax.inject.Inject
 
 class RestaurantRepository @Inject constructor(private val service: ApiService) {

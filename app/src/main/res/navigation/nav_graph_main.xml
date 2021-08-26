@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.example.practice.DetailFragment"
+        android:name="com.example.practice.ui.DetailFragment"
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
@@ -15,16 +15,16 @@
             app:argType="string" />
         <argument
             android:name="coordinate"
-            app:argType="com.example.practice.Coordinate" />
+            app:argType="com.example.practice.ui.Coordinate" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.practice.MainFragment"
+        android:name="com.example.practice.ui.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" />
     <fragment
         android:id="@+id/rootFragment"
-        android:name="com.example.practice.RootFragment"
+        android:name="com.example.practice.ui.RootFragment"
         android:label="fragment_root"
         tools:layout="@layout/fragment_root" >
         <action

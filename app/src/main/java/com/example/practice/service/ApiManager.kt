@@ -1,4 +1,4 @@
-package com.example.practice
+package com.example.practice.service
 
 import android.util.Log
 import okhttp3.OkHttpClient
