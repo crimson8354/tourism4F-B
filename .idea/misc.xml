@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.2296875" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_48.xml" value="0.23072916666666668" />
+        <entry key="app/src/main/res/drawable/ic_baseline_dashboard_48.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_location_city_48.xml" value="0.24583333333333332" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.253125" />

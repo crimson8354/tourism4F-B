@@ -11,11 +11,8 @@
         android:label="fragment_detail"
         tools:layout="@layout/fragment_detail" >
         <argument
-            android:name="address"
-            app:argType="string" />
-        <argument
-            android:name="coordinate"
-            app:argType="com.example.practice.ui.Coordinate" />
+            android:name="restaurant"
+            app:argType="com.example.practice.model.Restaurant" />
     </fragment>
     <fragment
         android:id="@+id/mainFragment"

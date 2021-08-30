@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.practice.databinding.RestaurantHeaderLayoutBinding
 import com.example.practice.databinding.RestaurantLayoutBinding
-import com.example.practice.model.Restaurant
-import com.example.practice.ui.Coordinate
 import com.example.practice.ui.RootFragmentDirections
-import com.example.practice.viewmodels.RestaurantRegion
 import com.example.practice.viewmodels.RestaurantTown
 
 private const val RESTAURANT_HEADER = 0
@@ -45,14 +42,13 @@ class RestaurantAdapter(private val data: RestaurantTown): RecyclerView.Adapter<
                 holder.binding.descTextView.text = info.desc
                 holder.binding.mainImageView.contentDescription = info.picDesc1
                 holder.binding.addressTextView.text = info.address
-                Glide.with(holder.binding.root).load(info.picture1)
-                    .placeholder(android.R.drawable.gallery_thumb)
-                    .into(holder.binding.mainImageView)
-                holder.binding.mainImageView.setOnClickListener {
-                    val action = RootFragmentDirections.actionRootFragmentToDetailFragment(
-                        info.address,
-                        Coordinate(info.longitude, info.latitude)
-                    )
+                if (info.picture1.isBlank()) {
+                    Glide.with(holder.binding.root).load(android.R.drawable.gallery_thumb).into(holder.binding.mainImageView)
+                } else {
+                    Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.mainImageView)
+                }
+                holder.binding.root.setOnClickListener {
+                    val action = RootFragmentDirections.actionRootFragmentToDetailFragment(info)
                     it.findNavController().navigate(action)
                 }
             }

@@ -46,11 +46,9 @@ class RestaurantViewModel @Inject constructor(private val repository: Restaurant
         for (restaurant in restaurants) {
             if (restaurant.region == null) {
                 restaurant.region = restaurant.address.substring(0..2).trim()
-                Log.i("test", restaurant.region)
             }
             if (restaurant.town == null) {
                 restaurant.town = restaurant.address.substring(3..5).trim()
-                Log.i("test", restaurant.town)
             }
 
             val region = result.find { it.name == restaurant.region }

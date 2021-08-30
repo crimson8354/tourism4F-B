@@ -5,12 +5,9 @@ import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.practice.ui.Coordinate
 import com.example.practice.databinding.RestaurantGridLayoutBinding
 import com.example.practice.databinding.RestaurantHeaderLayoutBinding
-import com.example.practice.model.Restaurant
 import com.example.practice.ui.RootFragmentDirections
-import com.example.practice.viewmodels.RestaurantRegion
 import com.example.practice.viewmodels.RestaurantTown
 
 private const val RESTAURANT_HEADER = 0
@@ -39,13 +36,14 @@ class GridRestaurantAdapter(private val data: RestaurantTown): RecyclerView.Adap
                 holder.binding.titleTextView.text = info.town
             }
             is CellViewHolder -> {
-                Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.gridMainImageView)
+                if (info.picture1.isBlank()) {
+                    Glide.with(holder.binding.root).load(android.R.drawable.gallery_thumb).into(holder.binding.gridMainImageView)
+                } else {
+                    Glide.with(holder.binding.root).load(info.picture1).placeholder(android.R.drawable.gallery_thumb).into(holder.binding.gridMainImageView)
+                }
                 holder.binding.gridNameTextView.text = info.name
                 holder.binding.root.setOnClickListener {
-                    val action = RootFragmentDirections.actionRootFragmentToDetailFragment(
-                        info.address,
-                        Coordinate(info.longitude, info.latitude)
-                    )
+                    val action = RootFragmentDirections.actionRootFragmentToDetailFragment(info)
                     it.findNavController().navigate(action)
                 }
             }
