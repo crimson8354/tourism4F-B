@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.practice.adapter.GridRestaurantAdapter
 import com.example.practice.adapter.RestaurantAdapter
+import com.example.practice.adapter.StickyHeaderDecoration
 import com.example.practice.databinding.FragmentMainBinding
 import com.example.practice.model.Restaurant
 import com.example.practice.viewmodels.RestaurantRegion
@@ -75,10 +76,12 @@ class MainFragment() : Fragment() {
                 RestaurantViewModel.Mode.GRID -> {
                     binding.mainRecyclerView.layoutManager = gridLayoutManager
                     binding.mainRecyclerView.adapter = gridAdapter
+                    binding.mainRecyclerView.addItemDecoration(StickyHeaderDecoration(data))
                 }
                 RestaurantViewModel.Mode.LINEAR -> {
                     binding.mainRecyclerView.layoutManager = linearLayoutManager
                     binding.mainRecyclerView.adapter = linearAdapter
+                    binding.mainRecyclerView.addItemDecoration(StickyHeaderDecoration(data))
                 }
             }
         })
